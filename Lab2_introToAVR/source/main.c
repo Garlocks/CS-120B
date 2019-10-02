@@ -20,7 +20,8 @@ int main(void) {
 	unsigned char temp_input = 0x00;
 
     /* Insert your solution below */
-    while (1) {
+    
+   while (1) {
 		temp_input = PINA;
 		PORTB = temp_input;	// Writes port B's 8 pins with the values
 							// on port A's 8 pins
