@@ -33,9 +33,12 @@ int main(void) {
 		}
 		if (temp == 0x00) {
 			cntavail = 0x04;
-		}
+		} 
 		if (temp == 0x0F) {
 			cntavail = 0x00;
+		}
+		if (cntavail == 0x00) {
+			cntavail = (cntavail | 0x80);
 		}
 		PORTC = cntavail;
 		
