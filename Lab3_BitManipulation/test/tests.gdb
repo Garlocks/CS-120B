@@ -27,18 +27,61 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+#test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
 # Set inputs
-setPINA 0x00
-setPINB 0x00
+#setPINA 0x00
+#setPINB 0x00
 # Continue for several ticks
-continue 2
+#continue 2
 # Set expect values
-expectPORTC 0
+#expectPORTC 0
 # Check pass/fail
-checkResult
+#checkResult
 
 # Add tests below
+
+test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
+setPINA 0x00
+setPINB 0x00
+continue 5
+expectPORTC 0
+checkResult
+
+test "PINA: 0x01, PINB: 0x00 => PORTC: 01"
+setPINA 0x01
+setPINB 0x00
+continue 5
+expectPORTC 0x01
+checkResult
+
+test "PINA: 0x00, PINB: 0x01 => PORTC: 01"
+setPINA 0x00
+setPINB 0x01
+continue 5
+expectPORTC 1
+checkResult
+
+test "PINA: 0x03, PINB: 0x01 => PORTC: 03"
+setPINA 0x03
+setPINB 0x01
+continue 5
+expectPORTC 3
+checkResult
+
+test "PINA: 0xFF, PINB: 0x08 => PORTC: 08"
+setPINA 0xFF
+setPINB 0x00
+continue 5
+expectPORTC 8
+checkResult
+
+test "PINA: 0x00, PINB: 0xFF => PORTC: 08"
+setPINA 0x00
+setPINB 0xFF
+continue 5
+expectPORTC 8
+checkResult
+
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
