@@ -20,31 +20,24 @@ int main(void) {
 	unsigned char tempb = 0x00;
 	unsigned char tempc = 0x00;
 	unsigned char num1a = 0x00;
-	unsigned char num1b = 0x00;
-
+	int i = 0;
 	
 	while(1) {
-		
 		tempa = PINA;
 		tempb = PINB;
-
-		while (tempa != 0x00) {
-			if (tempa & 0x01) {
+		num1a = 0x00;
+		for (i = 0; i < 8; ++i) {
+			if (tempa & 0x01 == 0x01) {
+				num1a = num1a + 1;
+			}
+			if (tempb & 0x01 == 0x01) {
 				num1a = num1a + 1;
 			}
 			tempa = tempa >> 1;
-		}
-		while (tempb != 0x00) {
-			if (tempb & 0x01) {
-				num1b = num1b + 1;
-			}
 			tempb = tempb >> 1;
 		}
-		
-		tempc = tempa + tempb;
-
+		tempc = num1a;
 		PORTC = tempc;
-		
 	}
 	
 	return 0;
