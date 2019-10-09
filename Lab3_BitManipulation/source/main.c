@@ -13,11 +13,39 @@
 #endif
 
 int main(void) {
-    /* Insert DDR and PORT initializations */
+	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
+	DDRB = 0x00; PORTB = 0xFF; // Configure port B's 8 pins as inputs
+	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s
+	unsigned char tempa = 0x00;
+	unsigned char tempb = 0x00;
+	unsigned char tempc = 0x00;
+	unsigned char num1a = 0x00;
+	unsigned char num1b = 0x00;
 
-    /* Insert your solution below */
-    while (1) {
+	
+	while(1) {
+		
+		tempa = PINA;
+		tempb = PINB;
 
-    }
-    return 1;
+		while (tempa != 0x00) {
+			if (tempa & 0x01) {
+				num1a = num1a + 1;
+			}
+			tempa = tempa >> 1;
+		}
+		while (tempb != 0x00) {
+			if (tempb & 0x01) {
+				num1b = num1b + 1;
+			}
+			tempb = tempb >> 1;
+		}
+		
+		tempc = tempa + tempb;
+
+		PORTC = tempc;
+		
+	}
+	
+	return 0;
 }
