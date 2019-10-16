@@ -42,7 +42,7 @@ echo Running all tests..."\n\n
 
 test "PINA: 0x00 => PORTB: 0x01, state: INIT"
 #set state = BEGIN
-continue 5
+#continue 5
 setPINA 0x00
 continue 5
 expectPORTC 0x01
@@ -51,7 +51,7 @@ checkResult
 
 test "PINA: 0x01 => PORTB: 0x01, state: INIT"
 #set state = BEGIN
-continue 5
+#continue 5
 setPINA 0x01
 continue 5
 expectPORTC 0x02
@@ -60,7 +60,7 @@ checkResult
 
 test "PINA: 0x00 => PORTB: 0x01, state: INIT"
 #set state = BEGIN
-continue 5
+#continue 5
 setPINA 0x00
 continue 5
 expectPORTC 0x01
