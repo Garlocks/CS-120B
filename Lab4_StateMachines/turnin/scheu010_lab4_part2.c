@@ -12,40 +12,94 @@
 #include "simAVRHeader.h"
 #endif
 
+enum States {BEGIN, INIT, ADD, MINUS, WAIT, RESET}state;
+void Tick();
+
 int main(void) {
-	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s
-	unsigned char temp = 0x00;
-	unsigned char output = 0x00;
-	
+	DDRA = 0x00; PORTA = 0xFF;
+	DDRC = 0xFF; PORTC = 0x07;
+	state = BEGIN;
 	while(1) {
-		
-		temp = PINA;
-		output = 0x00;
-		if (temp == 0x01 || temp == 0x02) {
-			output = 0x60; //low fuel
-		}
-		if (temp == 0x03 || temp == 0x04) {
-			output = 0x70; //low fuel
-		}
-		if (temp == 0x05 || temp == 0x06) {
-			output = 0x38;
-		}
-		if (temp == 0x07 || temp == 0x08 || temp == 0x09) {
-			output = 0x3C;
-		}
-		if (temp == 0x0A || temp == 0x0B || temp == 0x0C) {
-			output = 0x3E;
-		}
-		if (temp == 0x0D || temp == 0x0E || temp == 0x0F) {
-			output = 0x3F;
-		}
-		
-		PORTC = output;
-		
-		
-		
+		Tick();
 	}
-	
-	return 0;
+}
+
+void Tick(){
+	switch(state){ 
+		case BEGIN: {
+			state = INIT;
+			break;
+		}
+		
+		case INIT:
+		if((~PINA & 0x03) == 0x01) {
+			state = ADD; break;
+		} else if((~PINA & 0x03) == 0x02) {
+			state = MINUS; break;
+		} else if((~PINA & 0x03) == 0x03) {
+			state = RESET; break;
+		} else {
+			state = INIT; break;
+		}
+		
+		case INC:
+		state = WAIT;
+		break;
+		
+		case MINUS:
+		state = WAIT;
+		break;
+		
+		case WAIT:
+		if(((~PINA & 0x03) == 0x01) || ((~PINA & 0x03) == 0x02)) {
+			state = WAIT; break;
+		}
+		else if((~PINA & 0x03) == 0x03) {
+			state = RESET; break;
+		} else {
+			state = INIT; break;
+		}
+		
+		case RESET:
+		if(((~PINA & 0x03) == 0x01) || ((~PINA & 0x03) == 0x02)) {
+			state = RESET; break;
+		} else {
+			state = INIT; break;
+		}
+		
+		default:
+		break;
+	}
+	switch(state) { 
+		case BEGIN: {
+			PORTC = 0x07;
+		}
+		break;
+		
+		case INIT:
+		break;
+		
+		case ADD: {
+			if(PORTC >= 0x09) {
+				PORTC = 0x09; break;
+			} else {
+				PORTC = PORTC + 0x01; break;
+			}
+		}
+		
+		case MINUS: {
+			if(PORTC <= 0x00) {
+				PORTC = 0x00; break;
+			} else {
+				PORTC = PORTC - 0x01; break;
+			}
+		}
+		
+		case WAIT:
+		break;
+		
+		case RESET: {
+			PORTC = 0x00; break;
+		}
+	}
 }
