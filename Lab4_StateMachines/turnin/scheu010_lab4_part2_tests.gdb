@@ -40,49 +40,76 @@ echo Running all tests..."\n\n
 
 # Add tests below
 
-test "PINA: 0x00 => PORTC: 0"
-setPINA 0x00
+test "PINA: 0x00 => PORTC: 0x07, state: INIT"
+set state = BEGIN
 continue 5
-expectPORTC 0
+expectPORTC 0x07
+expect state INIT
 checkResult
 
-test "PINA: 0x1 => PORTC: 60"
+test "PINA: 0x01, 0x00 => PORTC: 0x08, state: WAIT"
+set state = BEGIN
+continue 5
 setPINA 0x01
 continue 5
-expectPORTC 0x60
-checkResult
-
-test "PINA: 0x4 => PORTC: 70"
-setPINA 0x04
+setPINA 0x00
 continue 5
-expectPORTC 0x70
+expectPORTC 0x08
+expect state WAIT
 checkResult
 
-test "PINA: 0x06 => PORTC: 38"
-setPINA 0x06
+test "PINA: 0x01, 0x00, 0x01, 0x00 => PORTC: 0x09, state: WAIT"
+set state = BEGIN
 continue 5
-expectPORTC 0x38
-checkResult
-
-test "PINA: 0x09 => PORTC: 3C"
-setPINA 0x09
+setPINA 0x01
 continue 5
-expectPORTC 0x3C
-checkResult
-
-test "PINA: 0x0A => PORTC: 3E"
-setPINA 0x0A
+setPINA 0x00
 continue 5
-expectPORTC 0x3E
-checkResult
-
-test "PINA: 0x0F => PORTC: 3F"
-setPINA 0x0F
+setPINA 0x01
 continue 5
-expectPORTC 0x3F
+setPINA 0x00
+continue 5
+expectPORTC 0x09
+expect state WAIT
 checkResult
 
+test "PINA: 0x01, 0x00, 0x01, 0x00, 0x02, 0x00 => PORTC: 0x08, state: WAIT"
+set state = BEGIN
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x08
+expect state WAIT
+checkResult
 
+test "PINA: 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 => PORTC: 0x09, state: WAIT"
+set state = BEGIN
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x09
+expect state WAIT
+checkResult
 
 
 # Report on how many tests passed/tests ran
