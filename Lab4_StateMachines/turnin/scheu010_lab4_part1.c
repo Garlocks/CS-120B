@@ -18,7 +18,7 @@ void Tick();
 int main(void) {
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRB = 0xFF; PORTB = 0x01;
-	state = Begin;
+	state = BEGIN;
 	while(1) {
 		Tick();
 	}
@@ -26,7 +26,7 @@ int main(void) {
 
 void Tick() {
 	switch(state) { 
-		case Begin:
+		case BEGIN:
 		PORTB = 0x01;
 		state = INIT;
 		break;
@@ -71,7 +71,7 @@ void Tick() {
 	}
 	
 	switch(state) { 
-		case Begin:
+		case BEGIN:
 		break;
 		
 		case INIT:
