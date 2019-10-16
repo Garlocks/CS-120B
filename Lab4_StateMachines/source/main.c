@@ -27,7 +27,7 @@ int main(void) {
 void Tick(){
 	switch(state){ 
 		case BEGIN: {
-			//PORTC = 0x07;
+			PORTC = 0x07;
 			state = INIT;
 			break;
 		}

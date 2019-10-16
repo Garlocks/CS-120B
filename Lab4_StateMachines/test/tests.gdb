@@ -136,14 +136,108 @@ expectPORTC 0x06
 expect state INIT
 checkResult
 
-test "PINA: 0x00 => PORTC: 0x07, state: INIT"
+test "PINA: 6 times (0x02, 0x00) => PORTC: 0x01, state: WAIT"
 set state = BEGIN
+setPINA 0x02
+continue 5
 setPINA 0x00
 continue 5
-expectPORTC 0x07
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x01
+expect state INIT
+checkResult
+ 
+
+test "PINA: 7 times (0x02, 0x00) => PORTC: 0x00, state: WAIT"
+set state = BEGIN
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x00
 expect state INIT
 checkResult
 
+test "PINA: 8 times (0x02, 0x00) => PORTC: 0x00, state: WAIT"
+set state = BEGIN
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x00
+expect state INIT
+checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
