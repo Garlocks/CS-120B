@@ -12,30 +12,87 @@
 #include "simAVRHeader.h"
 #endif
 
+
+enum States {BEGIN, INIT, OFF, WAIT1, ON, WAIT2}state;
+void Tick();
 int main(void) {
-	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-	DDRB = 0xFF; PORTB = 0x00; 
-	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s
-	unsigned char temp = 0x00;
-	unsigned char outputb = 0x00;
-	unsigned char outputc = 0x00;
-	
+	DDRA = 0x00; PORTA = 0xFF;
+	DDRB = 0xFF; PORTB = 0x01;
+	state = Begin;
 	while(1) {
+		Tick();
+	}
+}
+
+void Tick() {
+	switch(state) { 
+		case Begin:
+		PORTB = 0x01;
+		state = INIT;
+		break;
 		
-		temp = PINA;
-		outputb = 0x00;
-		outputc = 0x00;
+		case INIT:
+		if((~PINA & 0x01) == 0x01) {
+			state = OFF; break;
+		} else {
+			state = INIT; break;
+		}
 		
-		outputb = (0x0F & temp);
-		outputc = (0xF0 & temp);
+		case OFF:
+		if((~PINA & 0x01) == 0x00) {
+			state = WAIT1; break;
+		} else {
+			state = OFF; break;
+		}
 		
+		case WAIT1:
+		if((~PINA & 0x01) == 0x01) {
+			state = ON; break;
+		} else {
+			state = WAIT1; break;
+		}
 		
-		PORTB = outputb;
-		PORTC = outputc;
+		case ON:
+		if((~PINA & 0x01) == 0x00) {
+			state = WAIT2; break;
+		} else {
+			state = ON; break;
+		}
 		
+		case WAIT2:
+		if((~PINA & 0x01) == 0x01) {
+			state = OFF; break;
+		} else {
+			state = WAIT2; break;
+		}
 		
-		
+		default:
+		break;
 	}
 	
-	return 0;
+	switch(state) { 
+		case Begin:
+		break;
+		
+		case INIT:
+		PORTB = 0x01;
+		break;
+		
+		case OFF:
+		PORTB = 0x02;
+		break;
+		
+		case WAIT1:
+		break;
+		
+		case ON:
+		PORTB = 0x01;
+		break;
+		
+		case WAIT2:
+		break;
+		
+		default:
+		break;
+	}
 }
