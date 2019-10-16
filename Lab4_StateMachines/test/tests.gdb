@@ -45,7 +45,7 @@ set state = BEGIN
 continue 5
 setPINA 0x00
 continue 5
-expectPORTB 0x01
+expectPORTB 0x02
 expect state INIT
 checkResult
 
@@ -63,7 +63,7 @@ set state = BEGIN
 continue 5
 setPINA 0x00
 continue 5
-expectPORTB 0x01
+expectPORTB 0x02
 expect state INIT
 checkResult
 
