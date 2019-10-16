@@ -12,30 +12,105 @@
 #include "simAVRHeader.h"
 #endif
 
+enum States {START, INIT, HASHTAG, WAIT, UNLOCK, LOCK, PAUSE}state;
+void Tick();
+
 int main(void) {
-	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-	DDRB = 0xFF; PORTB = 0x00; 
-	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s
-	unsigned char temp = 0x00;
-	unsigned char outputb = 0x00;
-	unsigned char outputc = 0x00;
-	
+	DDRA = 0x00; PORTA = 0xFF;
+	DDRB = 0xFF; PORTB = 0x02;
+	DDRC = 0xFF; PORTC = 0x00;
+	state = START;
 	while(1) {
+		Tick();
+	}
+}
+
+void Tick() {
+	switch(state) { 
+		case START: {
+			state = INIT;
+			break;
+		}
 		
-		temp = PINA;
-		outputb = 0x00;
-		outputc = 0x00;
+		case INIT:
+		if((~PINA & 0x04) == 0x04) {
+			state = HASHTAG; break;
+		} else if ((~PINA & 0x80) == 0x80) {
+			state = LOCK; break;
+		} else {
+			state = INIT; break;
+		}
 		
-		outputb = (0x0F & temp);
-		outputc = (0xF0 & temp);
+		case HASHTAG: {
+			state = WAIT; break;
+		}
 		
+		case WAIT: {
+			if(((~PINA & 0x02) == 0x02) && ((PORTB & 0x01) == 0x01)) {
+				state = LOCK; break;
+			} else if((~PINA & 0x02) == 0x02) {
+				state = UNLOCK; break;
+			} else if((~PINA & 0x80) == 0x80) {
+				state = LOCK; break;
+			} else if((~PINA & 0x01) == 0x01) {
+				state = INIT; break;
+			} else {
+				state = WAIT; break;
+			}
+		}
 		
-		PORTB = outputb;
-		PORTC = outputc;
+		case UNLOCK: {
+			state = PAUSE; break;
+		}
 		
+		case PAUSE:
+		if((~PINA & 0x87) == 0x00) {
+			state = INIT; break;
+		} else {
+			state = PAUSE; break;
+		}
 		
+		case LOCK:
+		if((~PINA & 0x00) == 0x00) {
+			state = INIT; break;
+		} else {
+			state = LOCK; break;
+		}
 		
+		default:
+		break;
+	}
+	switch(state) { 
+		case START:
+		PORTB = 0x02;
+		PORTC = 0x00;
+		break;
+		
+		case INIT:
+		PORTC = 0x01;
+		break;
+		
+		case HASHTAG:
+		PORTC = 0x02;
+		break;
+		
+		case WAIT:
+		PORTC = 0x03;
+		break;
+		
+		case UNLOCK:
+		PORTC = 0x04;
+		PORTB = 0x01;
+		break;
+		
+		case PAUSE:
+		PORTC = 0x05;
+		break;
+		
+		case LOCK:
+		PORTC = 0x06;
+		PORTB = 0x02;
+		break;
 	}
 	
-	return 0;
 }
