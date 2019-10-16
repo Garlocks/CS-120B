@@ -40,41 +40,76 @@ echo Running all tests..."\n\n
 
 # Add tests below
 
-test "PINA: 0x00 => PORTC: 0x00 , PINB: 0x00"
+test "PINA: 0x00 => PORTC: 0x07, state: INIT"
+set state = BEGIN
+continue 5
+expectPORTC 0x07
+expect state INIT
+checkResult
+
+test "PINA: 0x01, 0x00 => PORTC: 0x08, state: WAIT"
+set state = BEGIN
+continue 5
+setPINA 0x01
+continue 5
 setPINA 0x00
 continue 5
-expectPORTB 0
-expectPORTC 0
+expectPORTC 0x08
+expect state WAIT
 checkResult
 
-test "PINA: 0xff => PORTC: 0xf0 , PINB: 0x0f"
-setPINA 0xff
+test "PINA: 0x01, 0x00, 0x01, 0x00 => PORTC: 0x09, state: WAIT"
+set state = BEGIN
 continue 5
-expectPORTB 0x0f
-expectPORTC 0xf0
-checkResult
-
-test "PINA: 0xaa => PORTC: 0xa0 , PINB: 0x0a"
-setPINA 0xaa
+setPINA 0x01
 continue 5
-expectPORTB 0x0a
-expectPORTC 0xa0
-checkResult
-
-test "PINA: 0xe0 => PORTC: 0xe0 , PINB: 0x00"
-setPINA 0xe0
+setPINA 0x00
 continue 5
-expectPORTB 0x00
-expectPORTC 0xe0
-checkResult
-
-test "PINA: 0x0e => PORTC: 0x00 , PINB: 0x0e"
-setPINA 0x0e
+setPINA 0x01
 continue 5
-expectPORTB 0x0e
-expectPORTC 0x00
+setPINA 0x00
+continue 5
+expectPORTC 0x09
+expect state WAIT
 checkResult
 
+test "PINA: 0x01, 0x00, 0x01, 0x00, 0x02, 0x00 => PORTC: 0x08, state: WAIT"
+set state = BEGIN
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x02
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x08
+expect state WAIT
+checkResult
+
+test "PINA: 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 => PORTC: 0x09, state: WAIT"
+set state = BEGIN
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+setPINA 0x01
+continue 5
+setPINA 0x00
+continue 5
+expectPORTC 0x09
+expect state WAIT
+checkResult
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
