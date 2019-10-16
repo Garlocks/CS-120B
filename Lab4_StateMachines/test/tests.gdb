@@ -64,7 +64,7 @@ continue 5
 setPINA 0x00
 continue 5
 expectPORTB 0x02
-expect state INIT
+expect state WAIT1
 checkResult
 
 
