@@ -40,46 +40,31 @@ echo Running all tests..."\n\n
 
 # Add tests below
 
-test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
-setPINA 0x00
-setPINB 0x00
+test "PINA: 0x00 => PORTB: 0x01, state: INIT"
+set state = BEGIN
 continue 5
-expectPORTC 0
-checkResult
-
-test "PINA: 0x01, PINB: 0x00 => PORTC: 01"
-setPINA 0x01
-setPINB 0x00
+setPINA 0x00
 continue 5
 expectPORTC 0x01
+expect state INIT
 checkResult
 
-test "PINA: 0x00, PINB: 0x01 => PORTC: 01"
+test "PINA: 0x01 => PORTB: 0x01, state: INIT"
+set state = BEGIN
+continue 5
+setPINA 0x01
+continue 5
+expectPORTC 0x02
+expect state WAIT1
+checkResult
+
+test "PINA: 0x00 => PORTB: 0x01, state: INIT"
+set state = BEGIN
+continue 5
 setPINA 0x00
-setPINB 0x01
 continue 5
-expectPORTC 1
-checkResult
-
-test "PINA: 0x03, PINB: 0x01 => PORTC: 03"
-setPINA 0x03
-setPINB 0x01
-continue 5
-expectPORTC 3
-checkResult
-
-test "PINA: 0xFF, PINB: 0x08 => PORTC: 08"
-setPINA 0xFF
-setPINB 0x00
-continue 5
-expectPORTC 8
-checkResult
-
-test "PINA: 0x00, PINB: 0xFF => PORTC: 08"
-setPINA 0x00
-setPINB 0xFF
-continue 5
-expectPORTC 8
+expectPORTC 0x01
+expect state INIT
 checkResult
 
 
