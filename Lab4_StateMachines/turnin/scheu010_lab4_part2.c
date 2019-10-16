@@ -32,11 +32,11 @@ void Tick(){
 		}
 		
 		case INIT:
-		if((~PINA & 0x03) == 0x01) {
+		if((PINA & 0x03) == 0x01) {
 			state = ADD; break;
-		} else if((~PINA & 0x03) == 0x02) {
+		} else if((PINA & 0x03) == 0x02) {
 			state = MINUS; break;
-		} else if((~PINA & 0x03) == 0x03) {
+		} else if((PINA & 0x03) == 0x03) {
 			state = RESET; break;
 		} else {
 			state = INIT; break;
@@ -51,17 +51,17 @@ void Tick(){
 		break;
 		
 		case WAIT:
-		if(((~PINA & 0x03) == 0x01) || ((~PINA & 0x03) == 0x02)) {
+		if(((PINA & 0x03) == 0x01) || ((PINA & 0x03) == 0x02)) {
 			state = WAIT; break;
 		}
-		else if((~PINA & 0x03) == 0x03) {
+		else if((PINA & 0x03) == 0x03) {
 			state = RESET; break;
 		} else {
 			state = INIT; break;
 		}
 		
 		case RESET:
-		if(((~PINA & 0x03) == 0x01) || ((~PINA & 0x03) == 0x02)) {
+		if(((PINA & 0x03) == 0x01) || ((PINA & 0x03) == 0x02)) {
 			state = RESET; break;
 		} else {
 			state = INIT; break;

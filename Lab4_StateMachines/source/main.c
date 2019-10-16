@@ -27,20 +27,22 @@ int main(void) {
 void Tick(){
 	switch(state){ 
 		case BEGIN: {
+			//PORTC = 0x07;
 			state = INIT;
 			break;
 		}
 		
 		case INIT:
-		if((~PINA & 0x03) == 0x01) {
+		if (PINA  == 0x01) {
 			state = ADD; break;
-		} else if((~PINA & 0x03) == 0x02) {
+		} else if(PINA== 0x02) {
 			state = MINUS; break;
-		} else if((~PINA & 0x03) == 0x03) {
+		} else if(PINA == 0x03) {
 			state = RESET; break;
-		} else {
+		} else if (PINA == 0x00) {
 			state = INIT; break;
 		}
+		break;
 		
 		case ADD:
 		state = WAIT;
@@ -51,19 +53,19 @@ void Tick(){
 		break;
 		
 		case WAIT:
-		if(((~PINA & 0x03) == 0x01) || ((~PINA & 0x03) == 0x02)) {
+		if((PINA== 0x01) || (PINA == 0x02)) {
 			state = WAIT; break;
 		}
-		else if((~PINA & 0x03) == 0x03) {
+		else if((PINA & 0x03) == 0x03) {
 			state = RESET; break;
 		} else {
 			state = INIT; break;
 		}
 		
 		case RESET:
-		if(((~PINA & 0x03) == 0x01) || ((~PINA & 0x03) == 0x02)) {
+		if((PINA == 0x01) && (PINA == 0x02)) {
 			state = RESET; break;
-		} else {
+		} else if (PINA == 0x00) {
 			state = INIT; break;
 		}
 		
@@ -86,6 +88,7 @@ void Tick(){
 				PORTC = PORTC + 0x01; break;
 			}
 		}
+		break;
 		
 		case MINUS: {
 			if(PORTC <= 0x00) {
@@ -94,6 +97,7 @@ void Tick(){
 				PORTC = PORTC - 0x01; break;
 			}
 		}
+		break;
 		
 		case WAIT:
 		break;

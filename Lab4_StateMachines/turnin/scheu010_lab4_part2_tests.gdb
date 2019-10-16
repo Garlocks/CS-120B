@@ -55,7 +55,7 @@ continue 5
 setPINA 0x00
 continue 5
 expectPORTC 0x08
-expect state WAIT
+expect state RESET
 checkResult
 
 test "PINA: 0x01, 0x00, 0x01, 0x00 => PORTC: 0x09, state: WAIT"
@@ -70,7 +70,7 @@ continue 5
 setPINA 0x00
 continue 5
 expectPORTC 0x09
-expect state WAIT
+expect state RESET
 checkResult
 
 test "PINA: 0x01, 0x00, 0x01, 0x00, 0x02, 0x00 => PORTC: 0x08, state: WAIT"
@@ -89,7 +89,7 @@ continue 5
 setPINA 0x00
 continue 5
 expectPORTC 0x08
-expect state WAIT
+expect state RESET
 checkResult
 
 test "PINA: 0x01, 0x00, 0x01, 0x00, 0x01, 0x00 => PORTC: 0x09, state: WAIT"
@@ -108,7 +108,7 @@ continue 5
 setPINA 0x00
 continue 5
 expectPORTC 0x09
-expect state WAIT
+expect state RESET
 checkResult
 
 
