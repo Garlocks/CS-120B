@@ -41,30 +41,30 @@ echo Running all tests..."\n\n
 # Add tests below
 
 test "PINA: 0x00 => PORTB: 0x01, state: INIT"
-#set state = BEGIN
-#continue 5
+set state = BEGIN
+continue 5
 setPINA 0x00
 continue 5
 expectPORTB 0x01
-#expect state INIT
+expect state INIT
 checkResult
 
 test "PINA: 0x01 => PORTB: 0x01, state: INIT"
-#set state = BEGIN
-#continue 5
+set state = BEGIN
+continue 5
 setPINA 0x01
 continue 5
 expectPORTB 0x02
-#expect state WAIT1
+expect state WAIT1
 checkResult
 
 test "PINA: 0x00 => PORTB: 0x01, state: INIT"
-#set state = BEGIN
-#continue 5
+set state = BEGIN
+continue 5
 setPINA 0x00
 continue 5
 expectPORTB 0x01
-#expect state INIT
+expect state INIT
 checkResult
 
 
