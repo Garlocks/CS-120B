@@ -42,7 +42,7 @@ void Tick(){
 			state = INIT; break;
 		}
 		
-		case INC:
+		case ADD:
 		state = WAIT;
 		break;
 		
