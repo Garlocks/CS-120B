@@ -46,7 +46,7 @@ continue 5
 setPINA 0x00
 continue 5
 expectPORTB 0x02
-expect state INIT
+expect state OFF
 checkResult
 
 test "PINA: 0x01 => PORTB: 0x01, state: INIT"
