@@ -36,6 +36,7 @@ void Tick() {
 		}
 
 		case HASHTAG: {
+			//need to add if statements here that i accidently deleted
 			state = WAIT; break;
 		}
 
