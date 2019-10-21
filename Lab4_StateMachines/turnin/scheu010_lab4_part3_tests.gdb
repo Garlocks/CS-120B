@@ -53,14 +53,14 @@ expectPORTB 0x01
 expect state WAIT
 checkResult
 
-test "PINA: 0x01, 0x00, 0x02 => PORTB: 0x01, state: WAIT"
+test "PINA: 0x04, 0x02, 0x01 => PORTB: 0x01, state: WAIT"
 set state = BEGIN
 continue 5
-setPINA 0x01
-continue 5
-setPINA 0x00
+setPINA 0x04
 continue 5
 setPINA 0x02
+continue 5
+setPINA 0x01
 continue 5
 expectPORTB 0x01
 expect state WAIT
