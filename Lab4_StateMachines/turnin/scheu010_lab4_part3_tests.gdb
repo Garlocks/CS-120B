@@ -40,7 +40,7 @@ echo Running all tests..."\n\n
 
 # Add tests below
 
-
+//add test cases that i deleted where it checks for release before the "y" button
 test "PINA: 0x04, 0x02 => PORTB: 0x01, state: WAIT"
 set state = START
 setPINA 0x04
