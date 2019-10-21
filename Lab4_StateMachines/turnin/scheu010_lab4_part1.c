@@ -33,41 +33,41 @@ void Tick() {
 		
 		case INIT:
 		PORTB = 0x01;
-		if((PINA & 0x01) == 0x01) {
+		if(PINA == 0x01) {
 			state = OFF; break;
 		} else {
 			state = INIT; break;
-		}
+		}break;
 		
 		case OFF:
 		PORTB = 0x02;
-		if((PINA & 0x01) == 0x00) {
+		if(PINA == 0x00) {
 			state = WAIT1; break;
 		} else {
 			state = OFF; break;
-		}
+		}break;
 		
 		case WAIT1:
-		if((PINA & 0x01) == 0x01) {
+		if(PINA == 0x01) {
 			state = ON; break;
 		} else {
 			state = WAIT1; break;
-		}
+		}break;
 		
 		case ON:
 		PORTB = 0x01;
-		if((PINA & 0x01) == 0x00) {
+		if(PINA == 0x00) {
 			state = WAIT2; break;
 		} else {
 			state = ON; break;
-		}
+		}break;
 		
 		case WAIT2:
-		if((PINA & 0x01) == 0x01) {
+		if(PINA == 0x01) {
 			state = OFF; break;
 		} else {
 			state = WAIT2; break;
-		}
+		}break;
 		
 		default:
 		break;
