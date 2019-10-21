@@ -33,9 +33,9 @@ void Tick() {
 		}
 		
 		case INIT:
-		if((~PINA & 0x04) == 0x04) {
+		if(PINA == 0x04) {
 			state = HASHTAG; break;
-		} else if ((~PINA & 0x80) == 0x80) {
+		} else if (PINA == 0x80) {
 			state = LOCK; break;
 		} else {
 			state = INIT; break;
@@ -46,11 +46,11 @@ void Tick() {
 		}
 		
 		case WAIT: {
-			if((~PINA & 0x02) == 0x02) {
+			if(PINA == 0x02) {
 				state = UNLOCK; break;
-			} else if((~PINA & 0x80) == 0x80) {
+			} else if((PINA & 0x80) == 0x80) {
 				state = LOCK; break;
-			} else if((~PINA & 0x01) == 0x01) {
+			} else if((PINA & 0x01) == 0x01) {
 				state = INIT; break;
 			} else {
 				state = WAIT; break;
@@ -63,14 +63,14 @@ void Tick() {
 		}
 		
 		case PAUSE:
-		if((~PINA & 0x87) == 0x00) {
+		if((PINA & 0x87) == 0x80) {
 			state = INIT; break;
 		} else {
 			state = PAUSE; break;
 		}
 		
 		case LOCK:
-		if((~PINA & 0x00) == 0x00) {
+		if(PINA == 0x00) {
 			state = INIT; break;
 		} else {
 			state = LOCK; break;
@@ -81,7 +81,7 @@ void Tick() {
 	}
 	switch(state) { 
 		case START:
-		PORTB = 0x02;
+		PORTB = 0x00;
 		PORTC = 0x00;
 		break;
 		
@@ -108,7 +108,7 @@ void Tick() {
 		
 		case LOCK:
 		PORTC = 0x06;
-		PORTB = 0x02;
+		PORTB = 0x00;
 		break;
 	}
 	
