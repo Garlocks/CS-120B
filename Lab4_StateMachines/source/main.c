@@ -37,7 +37,7 @@ void Tick() {
 			state = OFF; break;
 		} else {
 			state = INIT; break;
-		}
+		}break;
 		
 		case OFF:
 		PORTB = 0x02;
@@ -45,14 +45,14 @@ void Tick() {
 			state = WAIT1; break;
 		} else {
 			state = OFF; break;
-		}
+		}break;
 		
 		case WAIT1:
 		if(PINA == 0x01) {
 			state = ON; break;
 		} else {
 			state = WAIT1; break;
-		}
+		}break;
 		
 		case ON:
 		PORTB = 0x01;
@@ -60,14 +60,14 @@ void Tick() {
 			state = WAIT2; break;
 		} else {
 			state = ON; break;
-		}
+		}break;
 		
 		case WAIT2:
 		if(PINA == 0x01) {
 			state = OFF; break;
 		} else {
 			state = WAIT2; break;
-		}
+		}break;
 		
 		default:
 		break;
