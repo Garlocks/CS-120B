@@ -41,17 +41,17 @@ echo Running all tests..."\n\n
 # Add tests below
 
 
-test "PINA: 0x04, 0x02 => PORTB: 0x01, state: WAIT"
+test "PINA: 0x04, 0x02 => PORTB: 0x01, state: PAUSE"
 set state = START
 setPINA 0x04
 continue 5
 setPINA 0x02
 continue 5
 expectPORTB 0x01
-expect state WAIT
+expect state PAUSE
 checkResult
 
-test "PINA: 0x04, 0x02, 0x80 => PORTB: 0x00, state: WAIT"
+test "PINA: 0x04, 0x02, 0x80 => PORTB: 0x00, state: LOCK"
 set state = START
 setPINA 0x04
 continue 5
@@ -60,20 +60,20 @@ continue 5
 setPINA 0x80
 continue 5
 expectPORTB 0x00
-expect state WAIT
+expect state LOCK
 checkResult
 
-test "PINA: 0x00, 0x00 => PORTB: 0x00, state: WAIT"
-set state = BEGIN
+test "PINA: 0x00, 0x00 => PORTB: 0x00, state: INIT"
+set state = START
 setPINA 0x00
 continue 5
 setPINA 0x00
 continue 5
 expectPORTB 0x00
-expect state WAIT
+expect state INIT
 checkResult
 
-test "PINA: 0x04, 0x01, 0x02 => PORTB: 0x00, state: WAIT"
+test "PINA: 0x04, 0x01, 0x02 => PORTB: 0x00, state: INIT"
 set state = START
 setPINA 0x04
 continue 5
@@ -82,7 +82,7 @@ continue 5
 setPINA 0x02
 continue 5
 expectPORTB 0x00
-expect state WAIT
+expect state INIT
 checkResult
 
 
