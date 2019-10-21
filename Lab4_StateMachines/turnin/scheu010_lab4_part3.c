@@ -28,6 +28,7 @@ int main(void) {
 void Tick() {
 	switch(state) { 
 		case START: {
+			PORTB = 0x00;
 			state = INIT;
 			break;
 		}
@@ -59,6 +60,7 @@ void Tick() {
 		
 		
 		case UNLOCK: {
+			PORTB = 0x01;
 			state = PAUSE; break;
 		}
 		
@@ -70,6 +72,7 @@ void Tick() {
 		}
 		
 		case LOCK:
+		PORTB = 0x00;
 		if(PINA == 0x00) {
 			state = INIT; break;
 		} else {
