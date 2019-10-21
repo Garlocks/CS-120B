@@ -32,6 +32,7 @@ void Tick() {
 		break;
 		
 		case INIT:
+		PORTB = 0x01;
 		if((PINA & 0x01) == 0x01) {
 			state = OFF; break;
 		} else {
@@ -39,6 +40,7 @@ void Tick() {
 		}
 		
 		case OFF:
+		PORTB = 0x02;
 		if((PINA & 0x01) == 0x00) {
 			state = WAIT1; break;
 		} else {
@@ -53,6 +55,7 @@ void Tick() {
 		}
 		
 		case ON:
+		PORTB = 0x01;
 		if((PINA & 0x01) == 0x00) {
 			state = WAIT2; break;
 		} else {
