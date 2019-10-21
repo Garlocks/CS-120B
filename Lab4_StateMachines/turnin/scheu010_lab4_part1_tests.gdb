@@ -40,7 +40,7 @@ echo Running all tests..."\n\n
 
 # Add tests below
 
-test "PINA: 0x00 => PORTB: 0x01, state: INIT"
+test "PINA: 0x00 => PORTB: 0x02, state: INIT"
 set state = BEGIN
 continue 5
 setPINA 0x00
@@ -49,7 +49,7 @@ expectPORTB 0x02
 expect state OFF
 checkResult
 
-test "PINA: 0x01 => PORTB: 0x01, state: INIT"
+test "PINA: 0x01 => PORTB: 0x02, state: INIT"
 set state = BEGIN
 continue 5
 setPINA 0x01
